@@ -9,22 +9,22 @@ int main( void )
 { 
    LLPtr startPtr = NULL; // initially there are no nodes
    unsigned int choice; // user's choice
-   int item; // char entered by user
-   char name[30];
+   int item;
+   char Name[100]; // char entered by user
 
    instructions(); // display the menu
    printf( "%s", "? " );
-   scanf( "%u", &choice );
+   scanf( "%u", &choice ); //unsign int
 
    // loop while user does not choose 3
    while ( choice != 3 ) { 
 
       switch ( choice ) { 
          case 1:
-            printf( "%s", "Enter id and name:" );
-            scanf( "%d %s", &item, name );
-
-            insert( &startPtr, item,name ); // insert item in list
+            printf( "%s", "Enter a number: " );
+            scanf( "%d", &item );
+            scanf("%s", Name);
+            insert( &startPtr, item ,Name); // insert item in list
             printList( startPtr );
             printListR( startPtr );
             break;
@@ -35,7 +35,7 @@ int main( void )
                scanf( "%d", &item );
 
                // if character is found, remove it
-               if ( deletes( &startPtr, item ) ) { // remove item
+               if ( deletes( &startPtr, item) ) { // remove item
                   printf( "%d deleted.\n", item );
                   printList( startPtr );
                   printListR( startPtr );
@@ -59,6 +59,6 @@ int main( void )
       scanf( "%u", &choice );
    } // end while
   /* Clear all nodes at the end of nodes*/
-  clearall(startPtr);
-   puts( "End of run." );
+   puts( "Clear all nodes." );
+   delete_all(&startPtr);
 } // end main
