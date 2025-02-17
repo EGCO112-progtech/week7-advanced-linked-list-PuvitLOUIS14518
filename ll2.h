@@ -2,6 +2,7 @@
 // self-referential structure
 struct Node {
    int data; // each listNode contains a character
+   char name[30]; 
    struct Node *nextPtr; // pointer to next node
    struct Node *pPtr; // pointer to next node
 }; // end structure listNode
@@ -13,11 +14,11 @@ typedef LLnode *LLPtr; // synonym for ListNode*
 
 int deletes( LLPtr *sPtr, int value );
 int isEmpty( LLPtr sPtr );
-void insert( LLPtr *sPtr, int value );
+void insert( LLPtr *sPtr, int value ,char name[30]);
 void printList( LLPtr currentPtr );
 void printListR( LLPtr currentPtr );
 void instructions( void );
-
+void clearall( LLPtr currentPtr);
 
 // display program instructions to user
 void instructions( void )
@@ -29,7 +30,7 @@ void instructions( void )
 } // end function instructions
 
 // insert a new value into the list in sorted order
-void insert( LLPtr *sPtr, int value )
+void insert( LLPtr *sPtr, int value, char name[30] )
 {
    LLPtr newPtr; // pointer to new node
    LLPtr previousPtr; // pointer to previous node in list
@@ -39,6 +40,7 @@ void insert( LLPtr *sPtr, int value )
 
    if ( newPtr != NULL ) { // is space available
       newPtr->data = value; // place value in node
+      strcpy(newPtr->name,name);
       newPtr->nextPtr = NULL; // node does not link to another node
       newPtr->pPtr=NULL;
     
@@ -69,7 +71,7 @@ void insert( LLPtr *sPtr, int value )
       } // end else
    } // end if
    else {
-      printf( "%d not inserted. No memory available.\n", value );
+      printf( "%d %s not inserted. No memory available.\n", value,name );
    } // end else
 } // end function insert
 
@@ -130,14 +132,14 @@ void printList( LLPtr currentPtr )
    } // end if
    else {
       
-
+      puts("The list is:");
       // while not the end of the list
       while ( currentPtr->nextPtr!= NULL ) {
-         printf( "%d --> ", currentPtr->data );
+         printf( "%d %s --> ", currentPtr->data, currentPtr->name );
          currentPtr = currentPtr->nextPtr;
       } // end while
 
-      printf( "%d --> NULL\n",currentPtr->data );
+      printf( "%d %s --> NULL\n",currentPtr->data,currentPtr->name );
        
 
      
@@ -160,10 +162,34 @@ void printListR( LLPtr currentPtr )
       // แสดงค่าของ node จากท้ายมาหัว
       ;
       while (currentPtr != NULL) {
-          printf("%d -->", currentPtr->data);
+          printf("%d %s-->", currentPtr->data,currentPtr->name);
           currentPtr = currentPtr->pPtr; // เดินย้อนกลับไปยัง node ก่อนหน้า
       }
       printf("NULL\n");
       
   }
 } // end function printList
+
+void clearall( LLPtr currentPtr)
+{  int a=0;
+   int value=0;
+   char name[30];
+   while(a==0){
+      while (currentPtr->nextPtr != NULL) {
+         currentPtr = currentPtr->nextPtr;
+         value= currentPtr->data;
+         
+     }
+   // ถ้าลิสต์ว่าง
+   if ( isEmpty( currentPtr ) ) {
+      a=1;
+      puts("List is empty.\n");
+
+  }
+  else { deletes(currentPtr,value);
+      a=0;
+      printf(" delete %d",value);
+      
+  }}
+} // end function clearall
+
